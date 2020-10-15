@@ -27,7 +27,7 @@ class PartiesController < ApplicationController
   def invited_users
     params[:party][:party_users]
   end
-
+  # COMMENT: seems like a good candidate for a Service class. Looks like MovieService already uses this conn
   def conn
     Faraday.new(url: 'https://api.themoviedb.org')
   end

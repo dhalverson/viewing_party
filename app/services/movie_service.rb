@@ -1,5 +1,9 @@
 class MovieService
   def self.keyword_search(page_num, keywords)
+    # COMMENT: do you gain anything by saving the response as a variable here. Why not do this:
+    # parse(
+    #   keyword_search_endpoint(page_num, keywords)
+    # )
     response = keyword_search_endpoint(page_num, keywords)
     parse(response)
   end
@@ -51,6 +55,9 @@ class MovieService
     JSON.parse(response.body, symbolize_names: true)
   end
 
+  # COMMENT: this may be a bit pedantic, but usually variable names are nouns, and methods are verbs.
+  # It is a bit confusing to have these methods with 'endpoint' on the end. Do you lose any meaning by removing
+  # the 'endpoint' from the names here? What other naming convention could you use instead?
   def self.top_movies_endpoint(page_num)
     sort_by = 'vote_average.desc'
     conn.get("3/discover/movie?api_key=#{ENV['MOVIES_API_KEY']}&#{language('en-US')}&sort_by=#{sort_by}&#{exclude_adult}&page=#{page_num}&vote_count.gte=300")

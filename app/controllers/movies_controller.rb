@@ -2,10 +2,16 @@ class MoviesController < ApplicationController
   before_action :require_user
 
   def index
-    # COMMENT: boolean expressions like this are incredibly hard to read. Consider extracting hefty boolean
-    # logic into descriptive helper methods. You could also consider passing params into a more generic MovieFacade
-    # method, and handling all of this logic in the facade. Additionally, you could consider initializing an instance of
-    # MovieFacade with params like this: movie_facade = MovieFacade.new(params)
+    # COMMENT: 
+    # - boolean expressions like this are incredibly hard to read. Consider extracting hefty boolean logic into descriptive helper methods.
+    # - You could also consider passing params into a more generic MovieFacade method, handling all of this logic in the facade. 
+    # - Additionally, you could consider initializing an instance of MovieFacade with params like this: movie_facade = MovieFacade.new(params), what could be gained by using this pattern
+    # ---------
+    # this whole method could be just this:
+    # @movies = MovieFacade.index(params)
+    # redirect_to discover_path unless @movies
+    # ---------
+
     if params[:top_40] || !params[:top_40] && !params[:keyword_search] && !params[:trending]
       # @movies = MovieFacade.top_movies
       fetch_movies('top')
