@@ -13,6 +13,7 @@ class Party < ApplicationRecord
   end
 
   def invitees
+    # COMMENT: Hmm, I feel like this could be done with pure active record
     user_relation = users.joins('JOIN party_users AS p_u ON p_u.user_id = users.id').where("party_users.party_id = #{id} AND party_users.attendee_type = 1").distinct
 
     user_relation.map do |relation|
